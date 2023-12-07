@@ -37,9 +37,12 @@ export const tasksSlice = createSlice({
         task.completed = completed;
       }
     },
+    addTask: (state, action: PayloadAction<TaskType>) => {
+      state.push(action.payload);
+    },
   },
 });
 
-export const { setCompleted } = tasksSlice.actions;
+export const { setCompleted, addTask } = tasksSlice.actions;
 
 export default tasksSlice.reducer;

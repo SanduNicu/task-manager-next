@@ -1,5 +1,3 @@
-"use client";
-
 import React, { memo } from "react";
 import { TableBody } from "@mui/material";
 import { useSelector } from "react-redux";
