@@ -2,6 +2,6 @@ export interface TaskType {
   id: number;
   title: string;
   description: string;
-  dueDate: Date;
+  dueDate: number;
   completed: boolean;
 }

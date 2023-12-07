@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import TasksTable from "./tasksTable";
-import styles from "./page.module.scss";
+import styles from "./styles.module.scss";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { IconButton } from "@mui/material";
 
