@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import React from "react";
 import { Control, Controller } from "react-hook-form";
-import { Inputs } from "./AddTaskForm";
+import { Inputs } from "../types";
 
 interface ControlledTextField {
   label: string;

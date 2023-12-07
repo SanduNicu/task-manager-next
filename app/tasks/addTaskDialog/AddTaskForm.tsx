@@ -1,12 +1,12 @@
 import { Box, Button } from "@mui/material";
 import React, { memo, useCallback } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import ControlledTextField from "./ControlledTextField";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { SubmitHandler, useForm } from "react-hook-form";
+import ControlledTextField from "./fields/ControlledTextField";
 import { useAppDispatch } from "@/redux/store";
 import { addTask } from "@/redux/features/tasks/slice";
 import { Inputs } from "./types";
 import { defaultValues, parseTask } from "./utils";
+import ControlledDatePicker from "./fields/ControlledDatePicker";
 
 interface AddTaskDialogProps {
   handleClose: () => void;
@@ -43,23 +43,7 @@ function AddTaskForm(props: AddTaskDialogProps) {
               required: { value: true, message: "Description required!" },
             }}
           />
-          <Controller
-            control={control}
-            name="dueDate"
-            render={({ field }) => {
-              return (
-                <DatePicker
-                  label="Due date"
-                  format="DD/MM/YYYY"
-                  value={field.value}
-                  inputRef={field.ref}
-                  onChange={(date) => {
-                    field.onChange(date);
-                  }}
-                />
-              );
-            }}
-          />
+          <ControlledDatePicker control={control} />
         </Box>
       </form>
       <Button sx={{ marginTop: "1rem" }} onClick={handleSubmit(onSubmit)}>
