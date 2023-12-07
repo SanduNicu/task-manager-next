@@ -1,3 +1,5 @@
+"use client";
+
 import React, { memo } from "react";
 import {
   Checkbox,
@@ -7,42 +9,21 @@ import {
   TableRow,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { TaskType } from "@/app/types";
+import { useSelector } from "react-redux";
+import { tasksSelector } from "@/redux/features/tasks/selectors";
 
-const mockedTasks: TaskType[] = [
-  {
-    id: 1,
-    title: "Task 1",
-    description: "Task 1 description",
-    dueDate: new Date(),
-    completed: false,
-  },
-  {
-    id: 2,
-    title: "Task 2",
-    description: "Task 2 description",
-    dueDate: new Date(),
-    completed: false,
-  },
-  {
-    id: 3,
-    title: "Task 3",
-    description: "Task 3 description",
-    dueDate: new Date(),
-    completed: false,
-  },
-];
 function Body() {
+  const tasks = useSelector(tasksSelector);
   return (
     <TableBody>
-      {mockedTasks.map((task) => (
+      {tasks.map((task) => (
         <TableRow key={task.id}>
           <TableCell>
             <Checkbox />
           </TableCell>
           <TableCell>{task.title}</TableCell>
           <TableCell>{task.description}</TableCell>
-          <TableCell>{task.dueDate.toLocaleDateString()}</TableCell>
+          <TableCell>{task.dueDate.toLocaleDateString("en-GB")}</TableCell>
           <TableCell>
             <IconButton aria-label="delete" size="small">
               <DeleteIcon fontSize="inherit" />
