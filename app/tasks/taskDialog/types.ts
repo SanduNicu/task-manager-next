@@ -1,5 +1,3 @@
-export interface Inputs {
-  title: string;
-  description: string;
-  dueDate: null | any;
-}
+import { TaskType } from "@/app/types";
+
+export type Inputs = Omit<TaskType, "id" | "completed">;

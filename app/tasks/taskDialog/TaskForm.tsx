@@ -3,9 +3,9 @@ import React, { memo, useCallback } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import ControlledTextField from "./fields/ControlledTextField";
 import { useAppDispatch } from "@/redux/store";
-import { addTask } from "@/redux/features/tasks/slice";
+import { addTask, updateTask } from "@/redux/features/tasks/slice";
 import { Inputs } from "./types";
-import { initialValues, parseTask } from "./utils";
+import { initialValues } from "./utils";
 import ControlledDatePicker from "./fields/ControlledDatePicker";
 import { TaskType } from "@/app/types";
 
@@ -16,6 +16,7 @@ interface AddTaskDialogProps {
 
 function TaskForm(props: AddTaskDialogProps) {
   const { handleClose, defaultValues } = props;
+  const taskId = defaultValues?.id;
   const dispatch = useAppDispatch();
 
   const { handleSubmit, control } = useForm<Inputs>({
@@ -24,11 +25,14 @@ function TaskForm(props: AddTaskDialogProps) {
 
   const onSubmit: SubmitHandler<Inputs> = useCallback(
     (data) => {
-      const newTask = parseTask(data);
-      dispatch(addTask(newTask));
+      if (taskId) {
+        dispatch(updateTask({ id: taskId, data }));
+      } else {
+        dispatch(addTask(data));
+      }
       handleClose();
     },
-    [dispatch, handleClose]
+    [dispatch, handleClose, taskId]
   );
   return (
     <>

@@ -1,6 +1,7 @@
 import { TaskType } from "@/app/types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { SetCompletePayload } from "./types";
+import { SetCompletePayload, UpdateTaskPayload } from "./types";
+import { Inputs } from "@/app/tasks/taskDialog/types";
 
 const initialState: TaskType[] = [
   {
@@ -37,18 +38,33 @@ export const tasksSlice = createSlice({
         task.completed = completed;
       }
     },
-    addTask: (state, action: PayloadAction<TaskType>) => {
-      state.push(action.payload);
+    addTask: (state, action: PayloadAction<Inputs>) => {
+      const newTask = {
+        id: new Date().getTime(),
+        ...action.payload,
+        completed: false,
+      };
+      state.push(newTask);
+    },
+    updateTask: (state, action: PayloadAction<UpdateTaskPayload>) => {
+      const { id, data } = action.payload;
+      let task = state.find((el) => el.id === id);
+      if (task) {
+        task.title = data.title;
+        task.description = data.description;
+        task.dueDate = data.dueDate;
+      }
     },
     deleteTask: (state, action: PayloadAction<number>) => {
-      const elementIndex = state.findIndex((el) => el.id === action.payload);
-      if (elementIndex !== -1) {
-        state.splice(elementIndex, 1);
+      const taskIndex = state.findIndex((el) => el.id === action.payload);
+      if (taskIndex !== -1) {
+        state.splice(taskIndex, 1);
       }
     },
   },
 });
 
-export const { setCompleted, addTask, deleteTask } = tasksSlice.actions;
+export const { setCompleted, addTask, deleteTask, updateTask } =
+  tasksSlice.actions;
 
 export default tasksSlice.reducer;

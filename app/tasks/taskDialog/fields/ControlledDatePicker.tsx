@@ -23,7 +23,7 @@ export default function ControlledDatePicker(props: ControlledDatePickerProps) {
             value={dateValue}
             inputRef={field.ref}
             onChange={(date) => {
-              field.onChange(date);
+              field.onChange(dayjs(date).valueOf());
             }}
           />
         );
