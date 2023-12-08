@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Control, Controller } from "react-hook-form";
 import dayjs from "dayjs";
@@ -7,23 +7,43 @@ interface ControlledDatePickerProps {
   control: Control<any>;
 }
 
-export default function ControlledDatePicker(props: ControlledDatePickerProps) {
+const dateNotInThePast = (date: number | null) => {
+  const yesterday = dayjs().add(-1, "day").valueOf();
+  console.log(date);
+
+  return date === null || date >= yesterday
+    ? true
+    : "Due date can not be in the past";
+};
+
+function ControlledDatePicker(props: ControlledDatePickerProps) {
   const { control } = props;
 
   return (
     <Controller
       control={control}
       name="dueDate"
-      render={({ field }) => {
+      rules={{ validate: dateNotInThePast }}
+      render={({ field, fieldState: { error } }) => {
         const dateValue = field.value ? dayjs(field.value) : null;
+
         return (
           <DatePicker
+            disablePast
             label="Due date"
             format="DD/MM/YYYY"
             value={dateValue}
             inputRef={field.ref}
             onChange={(date) => {
-              field.onChange(dayjs(date).valueOf());
+              if (dayjs(date).isValid()) {
+                field.onChange(dayjs(date).valueOf());
+              }
+            }}
+            slotProps={{
+              textField: {
+                error: !!error,
+                helperText: error?.message,
+              },
             }}
           />
         );
@@ -31,3 +51,5 @@ export default function ControlledDatePicker(props: ControlledDatePickerProps) {
     />
   );
 }
+
+export default memo(ControlledDatePicker);
