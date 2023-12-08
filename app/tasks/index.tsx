@@ -5,29 +5,30 @@ import TasksTable from "./tasksTable";
 import styles from "./styles.module.scss";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { IconButton } from "@mui/material";
-import AddTaskDialog from "./addTaskDialog";
+import TaskDialog from "./taskDialog";
+import { useRouter } from "next/navigation";
 
 function Tasks() {
-  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
-
-  const handleClickOpen = useCallback(() => {
-    setIsDialogOpen(true);
-  }, []);
+  const router = useRouter();
 
   const handleClose = useCallback(() => {
-    setIsDialogOpen(false);
-  }, []);
+    router.push("/");
+  }, [router]);
+
+  const handleOpen = useCallback(() => {
+    router.push(`/?new-task`);
+  }, [router]);
 
   return (
     <div className={styles.tasks}>
       <header>
         <h1>Tasks</h1>
-        <IconButton onClick={handleClickOpen} aria-label="Add Task">
-          <AddCircleIcon fontSize="large" />
+        <IconButton onClick={handleOpen} aria-label="Add Task">
+          <AddCircleIcon color="primary" fontSize="large" />
         </IconButton>
       </header>
       <TasksTable />
-      <AddTaskDialog isDialogOpen={isDialogOpen} handleClose={handleClose} />
+      <TaskDialog handleClose={handleClose} />
     </div>
   );
 }

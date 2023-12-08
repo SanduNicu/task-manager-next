@@ -1,23 +1,31 @@
 import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
-import React from "react";
+import React, { memo } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import AddTaskForm from "./AddTaskForm";
+import TaskForm from "./TaskForm";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useSearchParams } from "next/navigation";
+import { useSelector } from "react-redux";
+import { taskSelector } from "@/redux/features/tasks/selectors";
 
-interface AddTaskDialogProps {
-  isDialogOpen: boolean;
+interface TaskDialogProps {
   handleClose: () => void;
 }
 
-export default function AddTaskDialog(props: AddTaskDialogProps) {
-  const { handleClose, isDialogOpen } = props;
+function TaskDialog(props: TaskDialogProps) {
+  const { handleClose } = props;
+  const searchParams = useSearchParams();
+  const taskSearchParam = searchParams.get("task");
+  const taskId = taskSearchParam ? Number(taskSearchParam) : -1;
+  const taskToEdit = useSelector(taskSelector(taskId));
+
+  const isOpen = searchParams.has("new-task") || !!taskToEdit;
 
   return (
     <Dialog
       onClose={handleClose}
       aria-labelledby="dialog-title"
-      open={isDialogOpen}
+      open={!!isOpen}
       maxWidth="lg"
     >
       <DialogTitle id="dialog-title">Create Task</DialogTitle>
@@ -34,9 +42,11 @@ export default function AddTaskDialog(props: AddTaskDialogProps) {
       </IconButton>
       <DialogContent dividers>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <AddTaskForm handleClose={handleClose} />
+          <TaskForm defaultValues={taskToEdit} handleClose={handleClose} />
         </LocalizationProvider>
       </DialogContent>
     </Dialog>
   );
 }
+
+export default memo(TaskDialog);

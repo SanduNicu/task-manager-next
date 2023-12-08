@@ -6,9 +6,13 @@ import { TaskType } from "@/app/types";
 import clsx from "clsx";
 import { useAppDispatch } from "@/redux/store";
 import { deleteTask, setCompleted } from "@/redux/features/tasks/slice";
+import EditIcon from "@mui/icons-material/Edit";
+import { useRouter } from "next/navigation";
 
 function Row(props: TaskType) {
   const { title, description, dueDate, id, completed } = props;
+  const router = useRouter();
+
   const dispatch = useAppDispatch();
   const validDueDate = dueDate
     ? new Date(dueDate).toLocaleDateString("en-GB")
@@ -30,6 +34,10 @@ function Row(props: TaskType) {
     dispatch(deleteTask(id));
   }, [id, dispatch]);
 
+  const openTask = useCallback(() => {
+    router.push(`/?task=${id}`);
+  }, [router, id]);
+
   return (
     <TableRow className={rowStyle}>
       <TableCell>
@@ -43,8 +51,11 @@ function Row(props: TaskType) {
       <TableCell>{description}</TableCell>
       <TableCell>{validDueDate}</TableCell>
       <TableCell>
+        <IconButton onClick={openTask} aria-label="Edit task">
+          <EditIcon color="info" fontSize="medium" />
+        </IconButton>
         <IconButton onClick={handleDelete} aria-label="Delete task">
-          <DeleteIcon fontSize="medium" />
+          <DeleteIcon color="error" fontSize="medium" />
         </IconButton>
       </TableCell>
     </TableRow>

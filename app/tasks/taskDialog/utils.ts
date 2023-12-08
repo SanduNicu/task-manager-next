@@ -10,7 +10,7 @@ export const parseTask = (data: Inputs) => {
   };
 };
 
-export const defaultValues = {
+export const initialValues = {
   title: "",
   description: "",
   dueDate: null,

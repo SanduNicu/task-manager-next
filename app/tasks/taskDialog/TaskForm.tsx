@@ -5,17 +5,22 @@ import ControlledTextField from "./fields/ControlledTextField";
 import { useAppDispatch } from "@/redux/store";
 import { addTask } from "@/redux/features/tasks/slice";
 import { Inputs } from "./types";
-import { defaultValues, parseTask } from "./utils";
+import { initialValues, parseTask } from "./utils";
 import ControlledDatePicker from "./fields/ControlledDatePicker";
+import { TaskType } from "@/app/types";
 
 interface AddTaskDialogProps {
   handleClose: () => void;
+  defaultValues: TaskType | undefined;
 }
 
-function AddTaskForm(props: AddTaskDialogProps) {
-  const { handleClose } = props;
+function TaskForm(props: AddTaskDialogProps) {
+  const { handleClose, defaultValues } = props;
   const dispatch = useAppDispatch();
-  const { handleSubmit, control } = useForm<Inputs>({ defaultValues });
+
+  const { handleSubmit, control } = useForm<Inputs>({
+    defaultValues: { ...initialValues, ...defaultValues },
+  });
 
   const onSubmit: SubmitHandler<Inputs> = useCallback(
     (data) => {
@@ -53,4 +58,4 @@ function AddTaskForm(props: AddTaskDialogProps) {
   );
 }
 
-export default memo(AddTaskForm);
+export default memo(TaskForm);
