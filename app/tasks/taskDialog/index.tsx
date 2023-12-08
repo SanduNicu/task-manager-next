@@ -18,6 +18,7 @@ function TaskDialog(props: TaskDialogProps) {
   const taskSearchParam = searchParams.get("task");
   const taskId = taskSearchParam ? Number(taskSearchParam) : -1;
   const taskToEdit = useSelector(taskSelector(taskId));
+  const title = "Create Task";
 
   const isOpen = searchParams.has("new-task") || !!taskToEdit;
 
@@ -28,7 +29,7 @@ function TaskDialog(props: TaskDialogProps) {
       open={!!isOpen}
       maxWidth="lg"
     >
-      <DialogTitle id="dialog-title">Create Task</DialogTitle>
+      <DialogTitle id="dialog-title">{title}</DialogTitle>
       <IconButton
         aria-label="close"
         onClick={handleClose}
