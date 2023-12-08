@@ -1,36 +1,17 @@
 import { TaskType } from "@/app/types";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice, current } from "@reduxjs/toolkit";
 import { SetCompletePayload, UpdateTaskPayload } from "./types";
 import { Inputs } from "@/app/tasks/taskDialog/types";
 
-const initialState: TaskType[] = [
-  {
-    id: 1,
-    title: "Task 1",
-    description: "Task 1 description",
-    dueDate: new Date().getTime(),
-    completed: false,
-  },
-  {
-    id: 2,
-    title: "Task 2",
-    description: "Task 2 description",
-    dueDate: new Date().getTime(),
-    completed: false,
-  },
-  {
-    id: 3,
-    title: "Task 3",
-    description: "Task 3 description",
-    dueDate: new Date().getTime(),
-    completed: true,
-  },
-];
+const initialState: TaskType[] = [];
 
 export const tasksSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
+    hydrate: (_, action) => {
+      return action.payload;
+    },
     setCompleted: (state, action: PayloadAction<SetCompletePayload>) => {
       const { id, completed } = action.payload;
       const task = state.find((task) => task.id === id);
@@ -64,7 +45,7 @@ export const tasksSlice = createSlice({
   },
 });
 
-export const { setCompleted, addTask, deleteTask, updateTask } =
+export const { setCompleted, addTask, deleteTask, updateTask, hydrate } =
   tasksSlice.actions;
 
 export default tasksSlice.reducer;

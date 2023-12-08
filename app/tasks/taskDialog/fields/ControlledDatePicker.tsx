@@ -9,8 +9,6 @@ interface ControlledDatePickerProps {
 
 const dateNotInThePast = (date: number | null) => {
   const yesterday = dayjs().add(-1, "day").valueOf();
-  console.log(date);
-
   return date === null || date >= yesterday
     ? true
     : "Due date can not be in the past";
