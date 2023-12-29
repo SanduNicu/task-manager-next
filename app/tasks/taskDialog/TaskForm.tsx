@@ -37,12 +37,12 @@ function TaskForm(props: AddTaskDialogProps) {
   return (
     <>
       <form>
-        <Box display="flex" flexDirection="column" gap="1rem" width="30rem">
+        <Box display="flex" flexDirection="column" gap="1rem">
           <ControlledTextField
             name="title"
             label="Title"
             control={control}
-            rules={{ required: { value: true, message: "Name equired!" } }}
+            rules={{ required: { value: true, message: "Name required!" } }}
           />
           <ControlledTextField
             name="description"
