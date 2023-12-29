@@ -12,7 +12,7 @@ describe("Tasks", () => {
     const header = getHeader();
 
     expect(header).toBeInTheDocument();
-    expect(TaskDialog).toHaveBeenCalled();
+    expect(TaskDialog).not.toHaveBeenCalled();
   });
 
   it("should render NoTaskInfo if no table data", () => {
