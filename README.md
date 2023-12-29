@@ -12,10 +12,10 @@ Run tests:
 npm run test
 ```
 
-# Production:
+### Production:
 
 https://task-manager-next-snicu.vercel.app/
 
-# Dev
+### Dev
 
 https://task-manager-next-dev.vercel.app/
