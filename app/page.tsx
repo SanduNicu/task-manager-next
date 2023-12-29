@@ -3,7 +3,7 @@
 import { store } from "@/redux/store";
 import styles from "./page.module.scss";
 import Tasks from "./tasks";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { hydrate } from "@/redux/features/tasks/slice";
 
 store.subscribe(() => {
@@ -30,4 +30,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default memo(Home);
