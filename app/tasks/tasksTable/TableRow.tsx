@@ -40,7 +40,7 @@ function Row(props: TaskType) {
 
   return (
     <TableRow className={rowStyle}>
-      <TableCell>
+      <TableCell padding="checkbox">
         <Checkbox
           checked={completed}
           onChange={handleCheckboxChange}
@@ -50,13 +50,15 @@ function Row(props: TaskType) {
       <TableCell>{title}</TableCell>
       <TableCell>{description}</TableCell>
       <TableCell>{validDueDate}</TableCell>
-      <TableCell>
-        <IconButton onClick={openTask} aria-label="Edit task">
-          <EditIcon color="info" fontSize="medium" />
-        </IconButton>
-        <IconButton onClick={handleDelete} aria-label="Delete task">
-          <DeleteIcon color="error" fontSize="medium" />
-        </IconButton>
+      <TableCell padding="checkbox">
+        <div className={styles.actions}>
+          <IconButton onClick={openTask} aria-label="Edit task">
+            <EditIcon color="info" fontSize="medium" />
+          </IconButton>
+          <IconButton onClick={handleDelete} aria-label="Delete task">
+            <DeleteIcon color="error" fontSize="medium" />
+          </IconButton>
+        </div>
       </TableCell>
     </TableRow>
   );

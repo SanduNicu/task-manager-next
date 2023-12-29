@@ -2,4 +2,8 @@
   &.completed {
     text-decoration: line-through;
   }
+
+  .actions {
+    display: flex;
+  }
 }
