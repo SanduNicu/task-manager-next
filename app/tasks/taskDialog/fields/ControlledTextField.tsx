@@ -1,15 +1,15 @@
 import { TextField } from "@mui/material";
-import React from "react";
+import React, { memo } from "react";
 import { Control, Controller } from "react-hook-form";
 import { Inputs } from "../types";
 
-interface ControlledTextField {
+interface ControlledTextFieldProps {
   label: string;
   name: "title" | "description";
   rules: any;
   control: Control<Inputs>;
 }
-export default function ControlledTextField(props: ControlledTextField) {
+function ControlledTextField(props: ControlledTextFieldProps) {
   const { control, label, name, rules } = props;
   return (
     <Controller
@@ -30,3 +30,5 @@ export default function ControlledTextField(props: ControlledTextField) {
     />
   );
 }
+
+export default memo(ControlledTextField);
